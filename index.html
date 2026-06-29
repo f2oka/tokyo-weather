@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>東京 気温・天気くらべ — 昨年との日別比較</title>
+<style>
+  :root{
+    /* 気温で色温度が動く軸: 冷→暖 */
+    --cold:   #3a6ea5;
+    --cool:   #6fb3c9;
+    --mild:   #e7d8a6;
+    --warm:   #e0934a;
+    --hot:    #c5482f;
+    /* UI */
+    --ink:    #20242b;
+    --ink-2:  #5a6473;
+    --paper:  #f6f4ee;
+    --panel:  #fffdf8;
+    --line:   #ddd7c8;
+    --ly:     #b9b3a4;  /* 昨年の色 */
+    --shadow: 0 1px 2px rgba(30,30,30,.06), 0 8px 28px rgba(30,30,30,.06);
+    --mono:  "SFMono-Regular", ui-monospace, "DejaVu Sans Mono", monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+                 "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+    line-height:1.5;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 64px}
+
+  /* ---- header ---- */
+  header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:6px}
+  .title{margin:0; font-size:clamp(26px,5vw,40px); font-weight:800; letter-spacing:-.02em}
+  .title small{display:block; font-weight:600; font-size:13px; color:var(--ink-2); letter-spacing:.06em; margin-top:6px}
+  .updated{font-family:var(--mono); font-size:12px; color:var(--ink-2); text-align:right; white-space:nowrap}
+  .updated b{color:var(--ink); font-weight:700}
+  #status{display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; background:#eee; color:var(--ink-2); margin-top:4px}
+  #status.live{background:#e3f1e6; color:#2f7d45}
+  #status.local{background:#f1ece0; color:#8a7a4d}
+
+  /* ---- summary cards ---- */
+  .cards{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:22px 0 30px}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow)}
+  .card .lbl{font-size:11px; letter-spacing:.08em; color:var(--ink-2); text-transform:uppercase}
+  .card .val{font-size:26px; font-weight:800; margin-top:4px; font-variant-numeric:tabular-nums}
+  .card .sub{font-size:12px; color:var(--ink-2); margin-top:2px; font-family:var(--mono)}
+  .delta{font-weight:800}
+  .delta.up{color:var(--hot)} .delta.down{color:var(--cold)} .delta.flat{color:var(--ink-2)}
+
+  /* ---- legend ---- */
+  .legend{display:flex; flex-wrap:wrap; gap:18px; align-items:center; font-size:12px; color:var(--ink-2); margin-bottom:14px}
+  .legend .key{display:flex; align-items:center; gap:7px}
+  .swatch{width:14px; height:14px; border-radius:4px; display:inline-block}
+  .swatch.cur{background:linear-gradient(var(--warm),var(--cool))}
+  .swatch.ly{background:var(--ly)}
+  .scale{display:flex; align-items:center; gap:6px; margin-left:auto}
+  .scale .bar{width:120px; height:8px; border-radius:4px;
+    background:linear-gradient(90deg,var(--cold),var(--cool),var(--mild),var(--warm),var(--hot))}
+
+  /* ---- strata chart ---- */
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px 14px 8px; box-shadow:var(--shadow); overflow-x:auto}
+  .panel h2{margin:2px 6px 4px; font-size:14px; letter-spacing:.02em}
+  .panel .hint{margin:0 6px 14px; font-size:12px; color:var(--ink-2)}
+  .strata{display:flex; align-items:flex-end; gap:0; min-width:640px; height:300px; position:relative; padding:0 4px}
+  .col{flex:1 1 0; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; position:relative; cursor:default}
+  .col:hover{background:rgba(0,0,0,.025)}
+  .plot{position:relative; width:100%; height:240px}
+  .band{position:absolute; left:50%; width:46%; transform:translateX(-50%); border-radius:5px}
+  .band.cur{background:linear-gradient(var(--_top),var(--_bot)); right:auto; left:54%; transform:none; width:38%}
+  .band.ly{background:repeating-linear-gradient(45deg,var(--ly),var(--ly) 3px,#cbc6b8 3px,#cbc6b8 6px); left:8%; transform:none; width:38%; opacity:.85}
+  .wx{position:absolute; top:-4px; left:50%; transform:translateX(-50%); font-size:14px; line-height:1}
+  .dlabel{font-family:var(--mono); font-size:9px; color:var(--ink-2); margin-top:6px; white-space:nowrap; transform:rotate(-90deg) translateX(-2px); transform-origin:center; height:34px; display:flex; align-items:center}
+  .gridline{position:absolute; left:0; right:0; border-top:1px dashed var(--line); font-family:var(--mono); font-size:9px; color:var(--ink-2)}
+  .gridline span{position:absolute; left:0; top:-6px; background:var(--panel); padding-right:4px}
+
+  /* tooltip */
+  .tip{position:fixed; pointer-events:none; z-index:50; background:var(--ink); color:#fff; font-size:12px;
+       border-radius:10px; padding:9px 11px; opacity:0; transition:opacity .12s; box-shadow:0 6px 24px rgba(0,0,0,.25); min-width:150px}
+  .tip b{font-size:13px}
+  .tip .row{display:flex; justify-content:space-between; gap:14px; font-variant-numeric:tabular-nums; margin-top:3px}
+  .tip .row .ly{color:#cfcabb}
+  .tip .d.up{color:#ffb3a3} .tip .d.down{color:#9fc4ef}
+
+  footer{margin-top:26px; font-size:11px; color:var(--ink-2); text-align:center; line-height:1.7}
+  footer a{color:var(--ink-2)}
+
+  @media (max-width:680px){
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .updated{text-align:left}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1 class="title">東京 気温・天気くらべ
+      <small>TOKYO DAILY — 今年 vs 昨年同日</small>
+    </h1>
+    <div class="updated">
+      最終更新 <b id="upd">—</b><br>
+      <span id="status">読み込み中…</span>
+    </div>
+  </header>
+
+  <section class="cards" id="cards"></section>
+
+  <div class="legend">
+    <span class="key"><span class="swatch cur"></span>今年（最高〜最低）</span>
+    <span class="key"><span class="swatch ly"></span>昨年同日</span>
+    <span class="key">🌡️ 帯の上端=最高 / 下端=最低　絵文字=天気</span>
+    <span class="scale">寒 <span class="bar"></span> 暑</span>
+  </div>
+
+  <section class="panel">
+    <h2>気温の地層 — 日ごとの今年と昨年</h2>
+    <p class="hint">各日に2本の帯。左（斜線）が昨年同日、右が今年。帯の高さがその日の最高〜最低気温の幅、色がその日の体感の暖かさ。バーにふれると詳細が出ます。</p>
+    <div class="strata" id="strata"></div>
+  </section>
+
+  <footer>
+    データ出典: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>（CC BY 4.0）/ 地点: 東京（35.69N, 139.69E）<br>
+    収集: GitHub Actions により毎日自動更新 — 数値は気象再解析・予報モデルに基づく推定値です
+  </footer>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+const LAT=35.6895, LON=139.6917, TZ="Asia/Tokyo";
+const VARS="temperature_2m_max,temperature_2m_min,temperature_2m_mean,weather_code,precipitation_sum";
+
+// WMO weather code -> 絵文字 + 説明
+function wx(code){
+  const m={
+    0:["☀️","快晴"],1:["🌤️","晴れ"],2:["⛅","薄曇り"],3:["☁️","曇り"],
+    45:["🌫️","霧"],48:["🌫️","霧氷"],
+    51:["🌦️","霧雨"],53:["🌦️","霧雨"],55:["🌦️","強い霧雨"],
+    61:["🌧️","小雨"],63:["🌧️","雨"],65:["🌧️","大雨"],
+    66:["🌧️","着氷性の雨"],67:["🌧️","着氷性の雨"],
+    71:["🌨️","小雪"],73:["🌨️","雪"],75:["❄️","大雪"],77:["🌨️","霧雪"],
+    80:["🌦️","にわか雨"],81:["🌧️","にわか雨"],82:["⛈️","激しいにわか雨"],
+    85:["🌨️","にわか雪"],86:["🌨️","にわか雪"],
+    95:["⛈️","雷雨"],96:["⛈️","雹を伴う雷雨"],99:["⛈️","激しい雷雨"]
+  };
+  return m[code]||["·","—"];
+}
+
+// 気温 -> 色（冷→暖）
+function tempColor(t){
+  const stops=[[2,"#3a6ea5"],[10,"#6fb3c9"],[18,"#e7d8a6"],[26,"#e0934a"],[33,"#c5482f"]];
+  if(t<=stops[0][0])return stops[0][1];
+  if(t>=stops[stops.length-1][0])return stops[stops.length-1][1];
+  for(let i=0;i<stops.length-1;i++){
+    const [a,ca]=stops[i],[b,cb]=stops[i+1];
+    if(t>=a&&t<=b){
+      const f=(t-a)/(b-a);
+      return lerpColor(ca,cb,f);
+    }
+  }
+  return "#888";
+}
+function lerpColor(c1,c2,f){
+  const p=h=>[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];
+  const a=p(c1),b=p(c2);
+  const r=a.map((v,i)=>Math.round(v+(b[i]-v)*f));
+  return `rgb(${r[0]},${r[1]},${r[2]})`;
+}
+
+function isoAddYears(iso,n){
+  const [y,m,d]=iso.split("-").map(Number);
+  return `${y+n}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+}
+function recordsFromDaily(daily){
+  const t=daily.time||[], out={};
+  t.forEach((d,i)=>out[d]={date:d,
+    t_max:daily.temperature_2m_max?.[i], t_min:daily.temperature_2m_min?.[i],
+    t_mean:daily.temperature_2m_mean?.[i], weather_code:daily.weather_code?.[i],
+    precip:daily.precipitation_sum?.[i]});
+  return out;
+}
+
+async function fetchJSON(url){
+  const r=await fetch(url); if(!r.ok)throw new Error(r.status); return r.json();
+}
+
+// ライブ取得（ブラウザから直接 Open-Meteo）。失敗時は同梱データにフォールバック。
+async function loadData(){
+  try{
+    const recent=await fetchJSON(
+      `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=${VARS}&timezone=${TZ}&past_days=35&forecast_days=1`);
+    const today=new Date();
+    const end=new Date(today); end.setDate(end.getDate()-365);
+    const start=new Date(end);  start.setDate(start.getDate()-35);
+    const fmt=d=>d.toISOString().slice(0,10);
+    const ly=await fetchJSON(
+      `https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=${VARS}&timezone=${TZ}&start_date=${fmt(start)}&end_date=${fmt(end)}`);
+    const merged={...recordsFromDaily(ly.daily), ...recordsFromDaily(recent.daily)};
+    return {store:merged, live:true};
+  }catch(e){
+    const local=await fetchJSON("data/weather.json").catch(()=>({}));
+    return {store:local, live:false};
+  }
+}
+
+function buildPairs(store){
+  // 今年側の各日に、昨年同日を紐付け。直近30日を表示。
+  const all=Object.values(store).filter(r=>r.t_max!=null).sort((a,b)=>a.date<b.date?-1:1);
+  const today=new Date();
+  const cutoff=new Date(today); cutoff.setFullYear(today.getFullYear());
+  const cur=all.filter(r=>{
+    const y=+r.date.slice(0,4);
+    return y===today.getFullYear() || (today.getMonth()===0 && y===today.getFullYear());
+  });
+  // フォールバック: 年で割り切れない場合、最新35件のうち直近期間を今年扱い
+  let curDays = cur.length? cur : all.slice(-35);
+  curDays = curDays.slice(-30);
+  return curDays.map(c=>{
+    const lyKey=isoAddYears(c.date,-1);
+    return {cur:c, ly:store[lyKey]||null};
+  });
+}
+
+function render({store,live}){
+  const statusEl=document.getElementById("status");
+  const dates=Object.keys(store).sort();
+  document.getElementById("upd").textContent = dates.length? dates[dates.length-1] : "—";
+  statusEl.textContent = live? "ライブ取得" : "保存データ表示";
+  statusEl.className = live? "live" : "local";
+
+  const pairs=buildPairs(store);
+
+  // ---- summary cards ----
+  const last=pairs[pairs.length-1];
+  const cards=document.getElementById("cards");
+  function deltaHTML(now,then,unit="°C"){
+    if(then==null) return `<span class="delta flat">—</span>`;
+    const d=+(now-then).toFixed(1);
+    const cls=d>0.05?"up":d<-0.05?"down":"flat";
+    const sign=d>0?"+":"";
+    return `<span class="delta ${cls}">${sign}${d}${unit}</span>`;
+  }
+  const c=last.cur, l=last.ly;
+  // 期間平均（今年）と昨年平均
+  const avg=arr=>arr.length? (arr.reduce((s,x)=>s+x,0)/arr.length):null;
+  const curMeans=pairs.map(p=>p.cur.t_mean).filter(v=>v!=null);
+  const lyMeans=pairs.map(p=>p.ly?.t_mean).filter(v=>v!=null);
+  const rainDays=pairs.filter(p=>[51,53,55,61,63,65,80,81,82,95,96,99].includes(p.cur.weather_code)).length;
+  const lyRainDays=pairs.filter(p=>p.ly&&[51,53,55,61,63,65,80,81,82,95,96,99].includes(p.ly.weather_code)).length;
+
+  const [emo,desc]=wx(c.weather_code);
+  cards.innerHTML=`
+    <div class="card">
+      <div class="lbl">最新日 ${c.date.slice(5)}</div>
+      <div class="val">${emo} ${desc}</div>
+      <div class="sub">最高 ${c.t_max}° / 最低 ${c.t_min}°</div>
+    </div>
+    <div class="card">
+      <div class="lbl">最高気温 vs 昨年</div>
+      <div class="val">${c.t_max}° ${deltaHTML(c.t_max,l?.t_max)}</div>
+      <div class="sub">昨年同日 ${l?l.t_max+"°":"—"}</div>
+    </div>
+    <div class="card">
+      <div class="lbl">平均気温（直近30日）</div>
+      <div class="val">${avg(curMeans)?.toFixed(1)}° ${deltaHTML(avg(curMeans),avg(lyMeans))}</div>
+      <div class="sub">昨年 ${avg(lyMeans)?avg(lyMeans).toFixed(1)+"°":"—"}</div>
+    </div>
+    <div class="card">
+      <div class="lbl">雨の日数（直近30日）</div>
+      <div class="val">${rainDays}日 ${deltaHTML(rainDays,lyRainDays," 日")}</div>
+      <div class="sub">昨年 ${lyRainDays}日</div>
+    </div>`;
+
+  // ---- strata chart ----
+  const strata=document.getElementById("strata");
+  strata.innerHTML="";
+  // 温度スケール（全データの最小・最大）
+  let lo=Infinity, hi=-Infinity;
+  pairs.forEach(p=>{
+    [p.cur.t_min,p.cur.t_max,p.ly?.t_min,p.ly?.t_max].forEach(v=>{
+      if(v!=null){lo=Math.min(lo,v);hi=Math.max(hi,v);}
+    });
+  });
+  lo=Math.floor(lo-2); hi=Math.ceil(hi+2);
+  const span=hi-lo;
+  const PLOT=240;
+  const y=t=>PLOT*(1-(t-lo)/span); // 上が高温
+
+  // gridlines
+  const grid=document.createElement("div");
+  grid.style.cssText="position:absolute;left:4px;right:4px;top:0;height:240px;pointer-events:none";
+  for(let t=Math.ceil(lo/5)*5; t<=hi; t+=5){
+    const g=document.createElement("div");
+    g.className="gridline"; g.style.top=y(t)+"px";
+    g.innerHTML=`<span>${t}°</span>`;
+    grid.appendChild(g);
+  }
+  strata.appendChild(grid);
+
+  pairs.forEach(p=>{
+    const col=document.createElement("div");
+    col.className="col";
+    const plot=document.createElement("div"); plot.className="plot";
+
+    // 昨年バンド
+    if(p.ly){
+      const b=document.createElement("div"); b.className="band ly";
+      b.style.top=y(p.ly.t_max)+"px";
+      b.style.height=Math.max(3,(y(p.ly.t_min)-y(p.ly.t_max)))+"px";
+      plot.appendChild(b);
+    }
+    // 今年バンド（色＝平均気温）
+    const cb=document.createElement("div"); cb.className="band cur";
+    cb.style.top=y(p.cur.t_max)+"px";
+    cb.style.height=Math.max(3,(y(p.cur.t_min)-y(p.cur.t_max)))+"px";
+    cb.style.setProperty("--_top",tempColor(p.cur.t_max));
+    cb.style.setProperty("--_bot",tempColor(p.cur.t_min));
+    plot.appendChild(cb);
+
+    // 天気絵文字（今年）
+    const e=document.createElement("div"); e.className="wx";
+    e.style.top=(y(p.cur.t_max)-18)+"px";
+    e.textContent=wx(p.cur.weather_code)[0];
+    plot.appendChild(e);
+
+    col.appendChild(plot);
+    const lab=document.createElement("div"); lab.className="dlabel";
+    lab.textContent=p.cur.date.slice(5);
+    col.appendChild(lab);
+
+    // tooltip
+    col.addEventListener("mousemove",ev=>showTip(ev,p));
+    col.addEventListener("mouseleave",hideTip);
+    strata.appendChild(col);
+  });
+}
+
+const tip=document.getElementById("tip");
+function showTip(ev,p){
+  const [e,d]=wx(p.cur.weather_code);
+  const lyTxt=p.ly?`${wx(p.ly.weather_code)[1]} / ${p.ly.t_max}°–${p.ly.t_min}°`:"データなし";
+  const dmax=p.ly?(p.cur.t_max-p.ly.t_max).toFixed(1):null;
+  const dcls=dmax>0?"up":dmax<0?"down":"";
+  tip.innerHTML=`<b>${p.cur.date}</b>
+    <div class="row"><span>今年 ${e} ${d}</span><span>${p.cur.t_max}°–${p.cur.t_min}°</span></div>
+    <div class="row ly"><span>昨年</span><span>${lyTxt}</span></div>
+    ${dmax!=null?`<div class="row"><span>最高気温差</span><span class="d ${dcls}">${dmax>0?"+":""}${dmax}°</span></div>`:""}
+    ${p.cur.precip?`<div class="row"><span>降水</span><span>${p.cur.precip}mm</span></div>`:""}`;
+  tip.style.opacity="1";
+  const x=Math.min(ev.clientX+14, window.innerWidth-180);
+  const yy=Math.max(12, ev.clientY-10);
+  tip.style.left=x+"px"; tip.style.top=yy+"px";
+}
+function hideTip(){tip.style.opacity="0";}
+
+loadData().then(render).catch(err=>{
+  document.getElementById("status").textContent="読み込み失敗";
+  console.error(err);
+});
+</script>
+</body>
+</html>
