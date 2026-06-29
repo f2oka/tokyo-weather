@@ -1,0 +1,54 @@
+name: 東京気象データ 日次収集
+
+on:
+  schedule:
+    # 毎日 JST 6:00 (UTC 21:00) に実行
+    - cron: "0 21 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "weather-pages"
+  cancel-in-progress: false
+
+jobs:
+  collect-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: データ収集（Open-Meteo）
+        run: python scripts/collect.py
+
+      - name: 変更をコミット
+        run: |
+          git config user.name "weather-bot"
+          git config user.email "weather-bot@users.noreply.github.com"
+          git add data/weather.json
+          if git diff --staged --quiet; then
+            echo "更新なし"
+          else
+            git commit -m "data: 東京気象データ更新 $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Pages 設定
+        uses: actions/configure-pages@v5
+
+      - name: 成果物アップロード（ルート一式）
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: GitHub Pages へデプロイ
+        uses: actions/deploy-pages@v4
