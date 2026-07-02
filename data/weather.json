@@ -28,7 +28,7 @@
   "t_max": 23.8,
   "t_min": 15.2,
   "t_mean": 19.1,
-  "weather_code": 80,
+  "weather_code": 61,
   "precip": 5.7
  },
  "2025-05-29": {
@@ -44,7 +44,7 @@
   "t_max": 16.7,
   "t_min": 14.5,
   "t_mean": 15.6,
-  "weather_code": 61,
+  "weather_code": 63,
   "precip": 31.3
  },
  "2025-05-31": {
@@ -52,7 +52,7 @@
   "t_max": 16.3,
   "t_min": 14.5,
   "t_mean": 15.5,
-  "weather_code": 81,
+  "weather_code": 65,
   "precip": 31.9
  },
  "2025-06-01": {
@@ -148,7 +148,7 @@
   "t_max": 28.7,
   "t_min": 19.2,
   "t_mean": 23.1,
-  "weather_code": 45,
+  "weather_code": 51,
   "precip": 0.4
  },
  "2025-06-13": {
@@ -164,7 +164,7 @@
   "t_max": 24.7,
   "t_min": 19.9,
   "t_mean": 21.5,
-  "weather_code": 80,
+  "weather_code": 63,
   "precip": 14.4
  },
  "2025-06-15": {
@@ -172,7 +172,7 @@
   "t_max": 30.5,
   "t_min": 22.9,
   "t_mean": 26.0,
-  "weather_code": 80,
+  "weather_code": 63,
   "precip": 22.3
  },
  "2025-06-16": {
@@ -180,7 +180,7 @@
   "t_max": 29.6,
   "t_min": 23.2,
   "t_mean": 26.0,
-  "weather_code": 3,
+  "weather_code": 63,
   "precip": 6.2
  },
  "2025-06-17": {
@@ -188,7 +188,7 @@
   "t_max": 33.6,
   "t_min": 22.2,
   "t_mean": 27.2,
-  "weather_code": 3,
+  "weather_code": 0,
   "precip": 0.0
  },
  "2025-06-18": {
@@ -196,7 +196,7 @@
   "t_max": 33.0,
   "t_min": 22.9,
   "t_mean": 27.2,
-  "weather_code": 3,
+  "weather_code": 1,
   "precip": 0.0
  },
  "2025-06-19": {
@@ -212,7 +212,7 @@
   "t_max": 30.0,
   "t_min": 20.9,
   "t_mean": 25.1,
-  "weather_code": 3,
+  "weather_code": 51,
   "precip": 0.0
  },
  "2025-06-21": {
@@ -244,7 +244,7 @@
   "t_max": 28.5,
   "t_min": 22.7,
   "t_mean": 25.4,
-  "weather_code": 80,
+  "weather_code": 53,
   "precip": 0.0
  },
  "2025-06-25": {
@@ -284,8 +284,8 @@
   "t_max": 31.5,
   "t_min": 20.9,
   "t_mean": 25.9,
-  "weather_code": 3,
-  "precip": 0.0
+  "weather_code": 51,
+  "precip": 0.33
  },
  "2025-06-30": {
   "date": "2025-06-30",
@@ -300,8 +300,16 @@
   "t_max": 31.9,
   "t_min": 22.9,
   "t_mean": 26.9,
+  "weather_code": 53,
+  "precip": 1.0
+ },
+ "2025-07-02": {
+  "date": "2025-07-02",
+  "t_max": 29.8,
+  "t_min": 24.0,
+  "t_mean": 26.4,
   "weather_code": 61,
-  "precip": 0.9
+  "precip": 7.0
  },
  "2026-05-25": {
   "date": "2026-05-25",
@@ -604,7 +612,15 @@
   "t_max": 27.3,
   "t_min": 21.1,
   "t_mean": 23.8,
-  "weather_code": 51,
-  "precip": 0.4
+  "weather_code": 53,
+  "precip": 1.1
+ },
+ "2026-07-02": {
+  "date": "2026-07-02",
+  "t_max": 22.8,
+  "t_min": 20.6,
+  "t_mean": 21.7,
+  "weather_code": 65,
+  "precip": 50.0
  }
 }
