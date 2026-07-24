@@ -479,6 +479,14 @@
   "weather_code": 2,
   "precip": 0.0
  },
+ "2025-07-24": {
+  "date": "2025-07-24",
+  "t_max": 33.3,
+  "t_min": 23.5,
+  "t_mean": 28.0,
+  "weather_code": 3,
+  "precip": 0.0
+ },
  "2026-05-25": {
   "date": "2026-05-25",
   "t_max": 25.4,
@@ -955,8 +963,16 @@
   "date": "2026-07-23",
   "t_max": 34.8,
   "t_min": 25.6,
-  "t_mean": 30.0,
-  "weather_code": 1,
+  "t_mean": 29.9,
+  "weather_code": 2,
   "precip": 0.0
+ },
+ "2026-07-24": {
+  "date": "2026-07-24",
+  "t_max": 31.8,
+  "t_min": 24.0,
+  "t_mean": 27.6,
+  "weather_code": 51,
+  "precip": 0.1
  }
 }
