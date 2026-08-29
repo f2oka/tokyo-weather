@@ -1547,8 +1547,16 @@
   "date": "2026-08-29",
   "t_max": 25.3,
   "t_min": 19.9,
-  "t_mean": 22.1,
-  "weather_code": 61,
-  "precip": 9.5
+  "t_mean": 21.8,
+  "weather_code": 63,
+  "precip": 15.3
+ },
+ "2026-08-30": {
+  "date": "2026-08-30",
+  "t_max": 24.4,
+  "t_min": 19.7,
+  "t_mean": 21.8,
+  "weather_code": 51,
+  "precip": 1.9
  }
 }
