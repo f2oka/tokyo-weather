@@ -2377,10 +2377,18 @@
  },
  "2026-10-20": {
   "date": "2026-10-20",
-  "t_max": 25.4,
-  "t_min": 17.0,
-  "t_mean": 20.8,
-  "weather_code": 53,
-  "precip": 1.9
+  "t_max": 25.1,
+  "t_min": 16.4,
+  "t_mean": 20.3,
+  "weather_code": 51,
+  "precip": 0.0
+ },
+ "2026-10-21": {
+  "date": "2026-10-21",
+  "t_max": 28.3,
+  "t_min": 18.1,
+  "t_mean": 23.5,
+  "weather_code": 51,
+  "precip": 0.2
  }
 }
