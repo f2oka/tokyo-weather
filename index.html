@@ -32,6 +32,7 @@ header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space
 .updated{font-family:var(--mono); font-size:12px; color:var(--ink-2); text-align:right; white-space:nowrap}
 .updated b{color:var(--ink); font-weight:700}
 #status{display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; background:#e3f1e6; color:#2f7d45; margin-top:4px}
+#status.error{background:#fde8e8; color:#c5482f}
 
 .controls{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin:16px 0 20px; background:var(--panel); border:1px solid var(--line); padding:14px 16px; border-radius:14px; box-shadow:var(--shadow)}
 .control-group{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
@@ -88,7 +89,6 @@ footer a{color:var(--ink-2)}
 @media (max-width:768px){
   .cards{grid-template-columns:repeat(2,1fr)}
   .controls{flex-direction:column; align-items:stretch}
-  .updated{text-align:left}
 }
 </style>
 </head>
@@ -98,7 +98,7 @@ footer a{color:var(--ink-2)}
     <h1 class="title">全国 気温・天気くらべ <small>DAILY WEATHER — 今年 vs 昨年同日</small></h1>
     <div class="updated">
       データ日付 <b id="upd">—</b><br>
-      <span id="status">JSONデータ表示</span>
+      <span id="status">読み込み中…</span>
     </div>
   </header>
 
@@ -246,15 +246,31 @@ function isoAddYears(iso,n){
 
 async function loadData(){
   try {
-    const res = await fetch("data/weather.json?t=" + Date.now());
+    // リポジトリ名に対応した相対パスの候補を自動で切り替える
+    const path = window.location.pathname.includes('/tokyo-weather/') ? '/tokyo-weather/data/weather.json' : 'data/weather.json';
+    const res = await fetch(path + "?t=" + Date.now());
     if(!res.ok) throw new Error("JSON読み込み失敗");
     globalAllData = await res.json();
+    
+    document.getElementById("status").textContent = "データ読み込み成功";
+    document.getElementById("status").className = "";
     render();
   } catch(e) {
     console.error(e);
-    document.getElementById("status").textContent = "データ読み込みエラー";
-    document.getElementById("status").style.background = "#fde8e8";
-    document.getElementById("status").style.color = "#c5482f";
+    // 代替パスで再挑戦
+    try {
+      const res2 = await fetch('./data/weather.json?t=' + Date.now());
+      if(res2.ok) {
+        globalAllData = await res2.json();
+        document.getElementById("status").textContent = "データ読み込み成功";
+        document.getElementById("status").className = "";
+        render();
+        return;
+      }
+    } catch(err){}
+
+    document.getElementById("status").textContent = "データがありません（Actions未実行）";
+    document.getElementById("status").className = "error";
   }
 }
 
@@ -312,7 +328,7 @@ function render(){
   strata.innerHTML = "";
 
   if(pairs.length === 0){
-    cards.innerHTML = `<div class="card" style="grid-column: span 4; text-align:center; color:var(--ink-2);">データがありません。GitHub Actionsのデータ更新をお待ちください。</div>`;
+    cards.innerHTML = `<div class="card" style="grid-column: span 4; text-align:center; color:var(--ink-2);">選択した都市のデータがありません。</div>`;
     return;
   }
 
