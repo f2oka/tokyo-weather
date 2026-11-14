@@ -102,29 +102,20 @@ def main():
   jst = timezone(timedelta(hours=9))
   today = datetime.now(jst)
 
-  # 昨年のデータ期間を「約1年前から400日前」までしっかり広げる
-  ly_end = today - timedelta(days=365)
-  ly_start = ly_end - timedelta(days=400)
+  # 過去約2年分（750日前）から「昨日」までの一連のデータを過去天気APIから一括取得する
+  # （※historical-forecast APIは昨日のデータまでをカバーしているため、十分な長さを確保できます）
+  end_date = today - timedelta(days=1)
+  start_date = end_date - timedelta(days=750)
 
   all_data = {}
 
   for city in CITIES:
     print(f"取得中: {city['name']} ({city['id']})...")
     try:
-      # 直近データ：取得上限である past_days=92 に設定して約3ヶ月前までカバー
-      recent_url = f"https://api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&past_days=92&forecast_days=1"
-      recent_res = fetch_json_with_retry(recent_url)
+      url = f"https://historical-forecast-api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&start_date={start_date.strftime('%Y-%m-%d')}&end_date={end_date.strftime('%Y-%m-%d')}"
+      res = fetch_json_with_retry(url)
 
-      # 昨年データ
-      ly_url = f"https://historical-forecast-api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&start_date={ly_start.strftime('%Y-%m-%d')}&end_date={ly_end.strftime('%Y-%m-%d')}"
-      ly_res = fetch_json_with_retry(ly_url)
-
-      # 昨年のデータをベースにしつつ、直近のデータを上書きしてマージ
-      merged = {
-          **parse_daily(ly_res.get("daily")),
-          **parse_daily(recent_res.get("daily")),
-      }
-      all_data[city["id"]] = merged
+      all_data[city["id"]] = parse_daily(res.get("daily"))
       time.sleep(0.2)
     except Exception as e:
       print(f"⚠️ {city['name']} の取得に失敗しましたがスキップします: {e}")
