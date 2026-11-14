@@ -1,578 +1,132 @@
-{
- "2025-10-10": {
-  "date": "2025-10-10",
-  "t_max": 22.5,
-  "t_min": 15.2,
-  "t_mean": 18.7,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2025-10-11": {
-  "date": "2025-10-11",
-  "t_max": 18.1,
-  "t_min": 15.8,
-  "t_mean": 16.8,
-  "weather_code": 53,
-  "precip": 2.0
- },
- "2025-10-12": {
-  "date": "2025-10-12",
-  "t_max": 23.8,
-  "t_min": 16.3,
-  "t_mean": 19.5,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-10-13": {
-  "date": "2025-10-13",
-  "t_max": 24.4,
-  "t_min": 18.9,
-  "t_mean": 20.8,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-10-14": {
-  "date": "2025-10-14",
-  "t_max": 20.5,
-  "t_min": 15.4,
-  "t_mean": 18.3,
-  "weather_code": 53,
-  "precip": 1.1
- },
- "2025-10-15": {
-  "date": "2025-10-15",
-  "t_max": 19.7,
-  "t_min": 15.2,
-  "t_mean": 16.9,
-  "weather_code": 53,
-  "precip": 3.5
- },
- "2025-10-16": {
-  "date": "2025-10-16",
-  "t_max": 19.8,
-  "t_min": 16.2,
-  "t_mean": 17.9,
-  "weather_code": 61,
-  "precip": 6.1
- },
- "2025-10-17": {
-  "date": "2025-10-17",
-  "t_max": 24.5,
-  "t_min": 15.6,
-  "t_mean": 19.9,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-10-18": {
-  "date": "2025-10-18",
-  "t_max": 24.6,
-  "t_min": 14.3,
-  "t_mean": 19.6,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-10-19": {
-  "date": "2025-10-19",
-  "t_max": 22.0,
-  "t_min": 15.7,
-  "t_mean": 19.3,
-  "weather_code": 55,
-  "precip": 1.8
- },
- "2025-10-20": {
-  "date": "2025-10-20",
-  "t_max": 20.1,
-  "t_min": 14.8,
-  "t_mean": 17.0,
-  "weather_code": 63,
-  "precip": 10.0
- },
- "2025-10-21": {
-  "date": "2025-10-21",
-  "t_max": 15.9,
-  "t_min": 13.0,
-  "t_mean": 14.5,
-  "weather_code": 51,
-  "precip": 0.8
- },
- "2025-10-22": {
-  "date": "2025-10-22",
-  "t_max": 14.1,
-  "t_min": 10.8,
-  "t_mean": 12.2,
-  "weather_code": 61,
-  "precip": 10.7
- },
- "2025-10-23": {
-  "date": "2025-10-23",
-  "t_max": 18.5,
-  "t_min": 11.8,
-  "t_mean": 14.3,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-10-24": {
-  "date": "2025-10-24",
-  "t_max": 16.4,
-  "t_min": 11.7,
-  "t_mean": 13.8,
-  "weather_code": 51,
-  "precip": 0.1
- },
- "2025-10-25": {
-  "date": "2025-10-25",
-  "t_max": 13.4,
-  "t_min": 12.2,
-  "t_mean": 12.8,
-  "weather_code": 53,
-  "precip": 3.1
- },
- "2025-10-26": {
-  "date": "2025-10-26",
-  "t_max": 16.6,
-  "t_min": 13.3,
-  "t_mean": 14.7,
-  "weather_code": 61,
-  "precip": 7.2
- },
- "2025-10-27": {
-  "date": "2025-10-27",
-  "t_max": 21.7,
-  "t_min": 15.8,
-  "t_mean": 18.3,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-10-28": {
-  "date": "2025-10-28",
-  "t_max": 19.1,
-  "t_min": 12.9,
-  "t_mean": 15.9,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2025-10-29": {
-  "date": "2025-10-29",
-  "t_max": 16.7,
-  "t_min": 11.5,
-  "t_mean": 13.5,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-10-30": {
-  "date": "2025-10-30",
-  "t_max": 17.7,
-  "t_min": 9.8,
-  "t_mean": 13.2,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2025-10-31": {
-  "date": "2025-10-31",
-  "t_max": 17.6,
-  "t_min": 12.1,
-  "t_mean": 14.3,
-  "weather_code": 65,
-  "precip": 41.8
- },
- "2025-11-01": {
-  "date": "2025-11-01",
-  "t_max": 23.2,
-  "t_min": 12.2,
-  "t_mean": 17.0,
-  "weather_code": 63,
-  "precip": 7.3
- },
- "2025-11-02": {
-  "date": "2025-11-02",
-  "t_max": 20.3,
-  "t_min": 12.1,
-  "t_mean": 15.7,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2025-11-03": {
-  "date": "2025-11-03",
-  "t_max": 18.3,
-  "t_min": 10.6,
-  "t_mean": 13.4,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2025-11-04": {
-  "date": "2025-11-04",
-  "t_max": 16.2,
-  "t_min": 8.3,
-  "t_mean": 12.2,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-11-05": {
-  "date": "2025-11-05",
-  "t_max": 16.4,
-  "t_min": 8.4,
-  "t_mean": 12.6,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-11-06": {
-  "date": "2025-11-06",
-  "t_max": 17.7,
-  "t_min": 11.5,
-  "t_mean": 14.4,
-  "weather_code": 55,
-  "precip": 1.8
- },
- "2025-11-07": {
-  "date": "2025-11-07",
-  "t_max": 20.6,
-  "t_min": 11.0,
-  "t_mean": 14.9,
-  "weather_code": 0,
-  "precip": 0.0
- },
- "2025-11-08": {
-  "date": "2025-11-08",
-  "t_max": 16.8,
-  "t_min": 9.8,
-  "t_mean": 13.3,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-11-09": {
-  "date": "2025-11-09",
-  "t_max": 12.4,
-  "t_min": 9.7,
-  "t_mean": 11.3,
-  "weather_code": 61,
-  "precip": 6.8
- },
- "2025-11-10": {
-  "date": "2025-11-10",
-  "t_max": 18.2,
-  "t_min": 8.1,
-  "t_mean": 13.5,
-  "weather_code": 51,
-  "precip": 0.3
- },
- "2025-11-11": {
-  "date": "2025-11-11",
-  "t_max": 16.1,
-  "t_min": 8.1,
-  "t_mean": 11.6,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2025-11-12": {
-  "date": "2025-11-12",
-  "t_max": 15.2,
-  "t_min": 7.9,
-  "t_mean": 11.4,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2025-11-13": {
-  "date": "2025-11-13",
-  "t_max": 13.6,
-  "t_min": 8.2,
-  "t_mean": 10.7,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2025-11-14": {
-  "date": "2025-11-14",
-  "t_max": 18.8,
-  "t_min": 9.0,
-  "t_mean": 13.5,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2026-10-10": {
-  "date": "2026-10-10",
-  "t_max": 24.6,
-  "t_min": 15.0,
-  "t_mean": 19.4,
-  "weather_code": 0,
-  "precip": 0.0
- },
- "2026-10-11": {
-  "date": "2026-10-11",
-  "t_max": 25.8,
-  "t_min": 15.4,
-  "t_mean": 20.0,
-  "weather_code": 0,
-  "precip": 0.0
- },
- "2026-10-12": {
-  "date": "2026-10-12",
-  "t_max": 24.9,
-  "t_min": 16.2,
-  "t_mean": 19.8,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2026-10-13": {
-  "date": "2026-10-13",
-  "t_max": 23.0,
-  "t_min": 16.3,
-  "t_mean": 19.4,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2026-10-14": {
-  "date": "2026-10-14",
-  "t_max": 23.2,
-  "t_min": 17.6,
-  "t_mean": 20.3,
-  "weather_code": 61,
-  "precip": 2.8
- },
- "2026-10-15": {
-  "date": "2026-10-15",
-  "t_max": 21.7,
-  "t_min": 16.2,
-  "t_mean": 18.8,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2026-10-16": {
-  "date": "2026-10-16",
-  "t_max": 25.3,
-  "t_min": 15.7,
-  "t_mean": 19.8,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-10-17": {
-  "date": "2026-10-17",
-  "t_max": 23.9,
-  "t_min": 14.6,
-  "t_mean": 19.3,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2026-10-18": {
-  "date": "2026-10-18",
-  "t_max": 23.0,
-  "t_min": 12.0,
-  "t_mean": 17.6,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2026-10-19": {
-  "date": "2026-10-19",
-  "t_max": 25.9,
-  "t_min": 15.6,
-  "t_mean": 20.7,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2026-10-20": {
-  "date": "2026-10-20",
-  "t_max": 25.1,
-  "t_min": 16.4,
-  "t_mean": 20.3,
-  "weather_code": 51,
-  "precip": 0.1
- },
- "2026-10-21": {
-  "date": "2026-10-21",
-  "t_max": 28.7,
-  "t_min": 17.6,
-  "t_mean": 23.4,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-10-22": {
-  "date": "2026-10-22",
-  "t_max": 22.2,
-  "t_min": 14.6,
-  "t_mean": 19.4,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-10-23": {
-  "date": "2026-10-23",
-  "t_max": 20.0,
-  "t_min": 12.6,
-  "t_mean": 16.2,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-10-24": {
-  "date": "2026-10-24",
-  "t_max": 16.1,
-  "t_min": 14.2,
-  "t_mean": 15.1,
-  "weather_code": 63,
-  "precip": 20.9
- },
- "2026-10-25": {
-  "date": "2026-10-25",
-  "t_max": 27.2,
-  "t_min": 16.1,
-  "t_mean": 19.9,
-  "weather_code": 63,
-  "precip": 6.5
- },
- "2026-10-26": {
-  "date": "2026-10-26",
-  "t_max": 19.0,
-  "t_min": 15.8,
-  "t_mean": 17.8,
-  "weather_code": 63,
-  "precip": 39.3
- },
- "2026-10-27": {
-  "date": "2026-10-27",
-  "t_max": 20.1,
-  "t_min": 15.7,
-  "t_mean": 17.3,
-  "weather_code": 51,
-  "precip": 0.3
- },
- "2026-10-28": {
-  "date": "2026-10-28",
-  "t_max": 18.0,
-  "t_min": 11.6,
-  "t_mean": 15.0,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2026-10-29": {
-  "date": "2026-10-29",
-  "t_max": 17.7,
-  "t_min": 9.9,
-  "t_mean": 13.5,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-10-30": {
-  "date": "2026-10-30",
-  "t_max": 20.2,
-  "t_min": 12.1,
-  "t_mean": 14.8,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-10-31": {
-  "date": "2026-10-31",
-  "t_max": 22.4,
-  "t_min": 12.2,
-  "t_mean": 16.6,
-  "weather_code": 51,
-  "precip": 0.2
- },
- "2026-11-01": {
-  "date": "2026-11-01",
-  "t_max": 20.2,
-  "t_min": 11.7,
-  "t_mean": 15.7,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2026-11-02": {
-  "date": "2026-11-02",
-  "t_max": 17.1,
-  "t_min": 11.8,
-  "t_mean": 13.6,
-  "weather_code": 61,
-  "precip": 6.0
- },
- "2026-11-03": {
-  "date": "2026-11-03",
-  "t_max": 19.4,
-  "t_min": 11.5,
-  "t_mean": 15.1,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-11-04": {
-  "date": "2026-11-04",
-  "t_max": 14.9,
-  "t_min": 10.9,
-  "t_mean": 12.9,
-  "weather_code": 63,
-  "precip": 17.3
- },
- "2026-11-05": {
-  "date": "2026-11-05",
-  "t_max": 16.6,
-  "t_min": 10.9,
-  "t_mean": 13.9,
-  "weather_code": 65,
-  "precip": 31.3
- },
- "2026-11-06": {
-  "date": "2026-11-06",
-  "t_max": 24.0,
-  "t_min": 13.7,
-  "t_mean": 18.1,
-  "weather_code": 3,
-  "precip": 0.0
- },
- "2026-11-07": {
-  "date": "2026-11-07",
-  "t_max": 19.3,
-  "t_min": 10.0,
-  "t_mean": 14.6,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2026-11-08": {
-  "date": "2026-11-08",
-  "t_max": 16.8,
-  "t_min": 9.0,
-  "t_mean": 12.4,
-  "weather_code": 2,
-  "precip": 0.0
- },
- "2026-11-09": {
-  "date": "2026-11-09",
-  "t_max": 10.5,
-  "t_min": 8.0,
-  "t_mean": 8.9,
-  "weather_code": 63,
-  "precip": 9.7
- },
- "2026-11-10": {
-  "date": "2026-11-10",
-  "t_max": 11.9,
-  "t_min": 8.8,
-  "t_mean": 10.1,
-  "weather_code": 61,
-  "precip": 12.6
- },
- "2026-11-11": {
-  "date": "2026-11-11",
-  "t_max": 14.8,
-  "t_min": 6.8,
-  "t_mean": 10.8,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2026-11-12": {
-  "date": "2026-11-12",
-  "t_max": 17.8,
-  "t_min": 7.8,
-  "t_mean": 12.2,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2026-11-13": {
-  "date": "2026-11-13",
-  "t_max": 19.5,
-  "t_min": 8.2,
-  "t_mean": 13.2,
-  "weather_code": 1,
-  "precip": 0.0
- },
- "2026-11-14": {
-  "date": "2026-11-14",
-  "t_max": 18.3,
-  "t_min": 8.8,
-  "t_mean": 13.6,
-  "weather_code": 3,
-  "precip": 0.0
- }
-}
+import json
+import os
+import time
+import urllib.request
+from datetime import datetime, timedelta, timezone
+
+# 47都道府県庁所在地のリスト
+CITIES = [
+    {"id": "sapporo", "name": "札幌市", "lat": 43.0642, "lon": 141.3469},
+    {"id": "aomori", "name": "青森市", "lat": 40.8244, "lon": 140.7400},
+    {"id": "morioka", "name": "盛岡市", "lat": 39.7036, "lon": 141.1527},
+    {"id": "sendai", "name": "仙台市", "lat": 38.2688, "lon": 140.8721},
+    {"id": "akita", "name": "秋田市", "lat": 39.7186, "lon": 140.1024},
+    {"id": "yamagata", "name": "山形市", "lat": 38.2404, "lon": 140.3636},
+    {"id": "fukushima", "name": "福島市", "lat": 37.7503, "lon": 140.4676},
+    {"id": "mito", "name": "水戸市", "lat": 36.3418, "lon": 140.4468},
+    {"id": "utsunomiya", "name": "宇都宮市", "lat": 36.5551, "lon": 139.8828},
+    {"id": "maebashi", "name": "前橋市", "lat": 36.3911, "lon": 139.0608},
+    {"id": "saitama", "name": "さいたま市", "lat": 35.8569, "lon": 139.6489},
+    {"id": "chiba", "name": "千葉市", "lat": 35.6074, "lon": 140.1065},
+    {"id": "tokyo", "name": "東京都", "lat": 35.6895, "lon": 139.6917},
+    {"id": "yokohama", "name": "横浜市", "lat": 35.4478, "lon": 139.6425},
+    {"id": "niigata", "name": "新潟市", "lat": 37.9026, "lon": 139.0236},
+    {"id": "toyama", "name": "富山市", "lat": 36.6953, "lon": 137.2113},
+    {"id": "kanazawa", "name": "金沢市", "lat": 36.5947, "lon": 136.6256},
+    {"id": "fukui", "name": "福井市", "lat": 36.0652, "lon": 136.2219},
+    {"id": "kofu", "name": "甲府市", "lat": 35.6642, "lon": 138.5684},
+    {"id": "nagano", "name": "長野市", "lat": 36.6513, "lon": 138.1812},
+    {"id": "gifu", "name": "岐阜市", "lat": 35.4233, "lon": 136.7607},
+    {"id": "shizuoka", "name": "静岡市", "lat": 34.9769, "lon": 138.3831},
+    {"id": "nagoya", "name": "名古屋市", "lat": 35.1815, "lon": 136.9066},
+    {"id": "tsu", "name": "津市", "lat": 34.7303, "lon": 136.5086},
+    {"id": "otsu", "name": "大津市", "lat": 35.0045, "lon": 135.8686},
+    {"id": "kyoto", "name": "京都市", "lat": 35.0116, "lon": 135.7681},
+    {"id": "osaka", "name": "大阪市", "lat": 34.6937, "lon": 135.5022},
+    {"id": "kobe", "name": "神戸市", "lat": 34.6901, "lon": 135.1955},
+    {"id": "nara", "name": "奈良市", "lat": 34.6851, "lon": 135.8328},
+    {"id": "wakayama", "name": "和歌山市", "lat": 34.2260, "lon": 135.1675},
+    {"id": "tottori", "name": "鳥取市", "lat": 35.5036, "lon": 134.2383},
+    {"id": "matsue", "name": "松江市", "lat": 35.4723, "lon": 133.0505},
+    {"id": "okayama", "name": "岡山市", "lat": 34.6618, "lon": 133.9350},
+    {"id": "hiroshima", "name": "広島市", "lat": 34.3853, "lon": 132.4553},
+    {"id": "yamaguchi", "name": "山口市", "lat": 34.1859, "lon": 131.4714},
+    {"id": "tokushima", "name": "徳島市", "lat": 34.0658, "lon": 134.5594},
+    {"id": "takamatsu", "name": "高松市", "lat": 34.3401, "lon": 134.0434},
+    {"id": "matsuyama", "name": "松山市", "lat": 33.8392, "lon": 132.7656},
+    {"id": "kochi", "name": "高知市", "lat": 33.5597, "lon": 133.5311},
+    {"id": "fukuoka", "name": "福岡市", "lat": 33.5902, "lon": 130.4017},
+    {"id": "saga", "name": "佐賀市", "lat": 33.2494, "lon": 130.2989},
+    {"id": "nagasaki", "name": "長崎市", "lat": 32.7503, "lon": 129.8779},
+    {"id": "kumamoto", "name": "熊本市", "lat": 32.7898, "lon": 130.7417},
+    {"id": "oita", "name": "大分市", "lat": 33.2382, "lon": 131.6126},
+    {"id": "miyazaki", "name": "宮崎市", "lat": 31.9111, "lon": 131.4239},
+    {"id": "kagoshima", "name": "鹿児島市", "lat": 31.5602, "lon": 130.5581},
+    {"id": "naha", "name": "那覇市", "lat": 26.2124, lon: 127.6809},
+]
+
+TZ = "Asia/Tokyo"
+VARS = "temperature_2m_max,temperature_2m_min,temperature_2m_mean,weather_code,precipitation_sum"
+
+
+def fetch_json(url):
+  req = urllib.request.Request(url, headers={"User-Agent": "WeatherBot/1.0"})
+  with urllib.request.urlopen(req, timeout=30) as res:
+    return json.loads(res.read().decode("utf-8"))
+
+
+def parse_daily(daily):
+  if not daily or "time" not in daily:
+    return {}
+  out = {}
+  times = daily["time"]
+  for i, d in enumerate(times):
+    out[d] = {
+        "date": d,
+        "t_max": daily["temperature_2m_max"][i]
+        if "temperature_2m_max" in daily
+        else None,
+        "t_min": daily["temperature_2m_min"][i]
+        if "temperature_2m_min" in daily
+        else None,
+        "t_mean": daily["temperature_2m_mean"][i]
+        if "temperature_2m_mean" in daily
+        else None,
+        "weather_code": daily["weather_code"][i]
+        if "weather_code" in daily
+        else None,
+        "precip": daily["precipitation_sum"][i]
+        if "precipitation_sum" in daily
+        else None,
+    }
+  return out
+
+
+def main():
+  jst = timezone(timedelta(hours=9))
+  today = datetime.now(jst)
+
+  # 過去約400日分を取得範囲にする
+  end_date = today - timedelta(days=365)
+  start_date = end_date - timedelta(days=400)
+
+  all_data = {}
+
+  for city in CITIES:
+    print(f"取得中: {city['name']} ({city['id']})...")
+    try:
+      # 直近データ (約35日前〜今日)
+      recent_url = f"https://api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&past_days=40&forecast_days=1"
+      recent_res = fetch_json(recent_url)
+
+      # 昨年データ
+      ly_url = f"https://historical-forecast-api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&start_date={start_date.strftime('%Y-%m-%d')}&end_date={end_date.strftime('%Y-%m-%d')}"
+      ly_res = fetch_json(ly_url)
+
+      merged = {
+          **parse_daily(ly_res.get("daily")),
+          **parse_daily(recent_res.get("daily")),
+      }
+      all_data[city["id"]] = merged
+      time.sleep(0.4)
+    except Exception as e:
+      print(f"❌ 失敗 {city['id']}: {e}")
+
+  os.makedirs("data", exist_ok=True)
+  with open("data/weather.json", "w", encoding="utf-8") as f:
+    json.dump(all_data, f, ensure_ascii=False, separators=(",", ":"))
+  print("✅ data/weather.json の保存が完了しました。")
+
+
+if __name__ == "__main__":
+  main()
