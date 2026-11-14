@@ -63,7 +63,7 @@ def fetch_json_with_retry(url, retries=3, delay=2):
   for i in range(retries):
     try:
       req = urllib.request.Request(url, headers={"User-Agent": "WeatherBot/1.0"})
-      with urllib.request.urlopen(req, timeout=15) as res:
+      with urllib.request.urlopen(req, timeout=20) as res:
         return json.loads(res.read().decode("utf-8"))
     except Exception as e:
       if i == retries - 1:
@@ -102,8 +102,7 @@ def main():
   jst = timezone(timedelta(hours=9))
   today = datetime.now(jst)
 
-  # 期間をしっかりと過去1年分＋直近分に設定
-  # 昨年の十分な余裕を持った日付（例: 450日前から365日前まで）を過去データとして取得
+  # 昨年のデータ期間を「約1年前から400日前」までしっかり広げる
   ly_end = today - timedelta(days=365)
   ly_start = ly_end - timedelta(days=400)
 
@@ -112,14 +111,15 @@ def main():
   for city in CITIES:
     print(f"取得中: {city['name']} ({city['id']})...")
     try:
-      # 直近データ (約50日前〜今日まで余裕を持って取得)
-      recent_url = f"https://api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&past_days=50&forecast_days=1"
+      # 直近データ：取得上限である past_days=92 に設定して約3ヶ月前までカバー
+      recent_url = f"https://api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&past_days=92&forecast_days=1"
       recent_res = fetch_json_with_retry(recent_url)
 
-      # 昨年データ（余裕を持った過去期間）
+      # 昨年データ
       ly_url = f"https://historical-forecast-api.open-meteo.com/v1/forecast?latitude={city['lat']}&longitude={city['lon']}&daily={VARS}&timezone={TZ}&start_date={ly_start.strftime('%Y-%m-%d')}&end_date={ly_end.strftime('%Y-%m-%d')}"
       ly_res = fetch_json_with_retry(ly_url)
 
+      # 昨年のデータをベースにしつつ、直近のデータを上書きしてマージ
       merged = {
           **parse_daily(ly_res.get("daily")),
           **parse_daily(recent_res.get("daily")),
