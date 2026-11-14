@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>全国 気温・天気くらべ — 昨年との日別比較</title>
+<link rel="icon" href="data:,">
 <style>
 :root{
   --cold:   #3a6ea5;
@@ -25,18 +26,13 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0; background:var(--paper); color:var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif; line-height:1.5;}
 .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 64px}
 
-/* ---- header ---- */
 header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:16px}
 .title{margin:0; font-size:clamp(24px,4.5vw,36px); font-weight:800; letter-spacing:-.02em}
 .title small{display:block; font-weight:600; font-size:13px; color:var(--ink-2); letter-spacing:.06em; margin-top:6px}
 .updated{font-family:var(--mono); font-size:12px; color:var(--ink-2); text-align:right; white-space:nowrap}
 .updated b{color:var(--ink); font-weight:700}
-#status{display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; background:#eee; color:var(--ink-2); margin-top:4px}
-#status.live{background:#e3f1e6; color:#2f7d45}
-#status.local{background:#f1ece0; color:#8a7a4d}
-#status.error{background:#fde8e8; color:#c5482f}
+#status{display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; background:#e3f1e6; color:#2f7d45; margin-top:4px}
 
-/* ---- controls / selectors ---- */
 .controls{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin:16px 0 20px; background:var(--panel); border:1px solid var(--line); padding:14px 16px; border-radius:14px; box-shadow:var(--shadow)}
 .control-group{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
 .control-group span{font-size:13px; font-weight:bold; color:var(--ink-2)}
@@ -46,7 +42,6 @@ header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space
 .period-btn:hover{border-color:var(--ink-2); color:var(--ink)}
 .period-btn.active{background:var(--ink); border-color:var(--ink); color:#fff}
 
-/* ---- summary cards ---- */
 .cards{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:16px 0 30px}
 .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow)}
 .card .lbl{font-size:11px; letter-spacing:.08em; color:var(--ink-2); text-transform:uppercase}
@@ -57,7 +52,6 @@ header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space
 .delta.down{color:var(--cold)}
 .delta.flat{color:var(--ink-2)}
 
-/* ---- legend ---- */
 .legend{display:flex; flex-wrap:wrap; gap:18px; align-items:center; font-size:12px; color:var(--ink-2); margin-bottom:14px}
 .legend .key{display:flex; align-items:center; gap:7px}
 .swatch{width:14px; height:14px; border-radius:4px; display:inline-block}
@@ -66,7 +60,6 @@ header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space
 .scale{display:flex; align-items:center; gap:6px; margin-left:auto}
 .scale .bar{width:120px; height:8px; border-radius:4px; background:linear-gradient(90deg,var(--cold),var(--cool),var(--mild),var(--warm),var(--hot))}
 
-/* ---- strata chart ---- */
 .panel{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px 14px 8px; box-shadow:var(--shadow); overflow-x:auto}
 .panel h2{margin:2px 6px 4px; font-size:14px; letter-spacing:.02em}
 .panel .hint{margin:0 6px 14px; font-size:12px; color:var(--ink-2)}
@@ -82,7 +75,6 @@ header{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space
 .gridline{position:absolute; left:0; right:0; border-top:1px dashed var(--line); font-family:var(--mono); font-size:9px; color:var(--ink-2)}
 .gridline span{position:absolute; left:0; top:-6px; background:var(--panel); padding-right:4px}
 
-/* tooltip */
 .tip{position:fixed; pointer-events:none; z-index:50; background:var(--ink); color:#fff; font-size:12px; border-radius:10px; padding:9px 11px; opacity:0; transition:opacity .12s; box-shadow:0 6px 24px rgba(0,0,0,.25); min-width:150px}
 .tip b{font-size:13px}
 .tip .row{display:flex; justify-content:space-between; gap:14px; font-variant-numeric:tabular-nums; margin-top:3px}
@@ -98,7 +90,6 @@ footer a{color:var(--ink-2)}
   .controls{flex-direction:column; align-items:stretch}
   .updated{text-align:left}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -106,8 +97,8 @@ footer a{color:var(--ink-2)}
   <header>
     <h1 class="title">全国 気温・天気くらべ <small>DAILY WEATHER — 今年 vs 昨年同日</small></h1>
     <div class="updated">
-      最終更新 <b id="upd">—</b><br>
-      <span id="status">読み込み中…</span>
+      データ日付 <b id="upd">—</b><br>
+      <span id="status">JSONデータ表示</span>
     </div>
   </header>
 
@@ -151,70 +142,67 @@ footer a{color:var(--ink-2)}
 
 <script>
 const CITIES = [
-  {name: "札幌市（北海道）", lat: 43.0642, lon: 141.3469},
-  {name: "青森市（青森）", lat: 40.8244, lon: 140.7400},
-  {name: "盛岡市（岩手）", lat: 39.7036, lon: 141.1527},
-  {name: "仙台市（宮城）", lat: 38.2688, lon: 140.8721},
-  {name: "秋田市（秋田）", lat: 39.7186, lon: 140.1024},
-  {name: "山形市（山形）", lat: 38.2404, lon: 140.3636},
-  {name: "福島市（福島）", lat: 37.7503, lon: 140.4676},
-  {name: "水戸市（茨城）", lat: 36.3418, lon: 140.4468},
-  {name: "宇都宮市（栃木）", lat: 36.5551, lon: 139.8828},
-  {name: "前橋市（群馬）", lat: 36.3911, lon: 139.0608},
-  {name: "さいたま市（埼玉）", lat: 35.8569, lon: 139.6489},
-  {name: "千葉市（千葉）", lat: 35.6074, lon: 140.1065},
-  {name: "東京都（東京）", lat: 35.6895, lon: 139.6917},
-  {name: "横浜市（神奈川）", lat: 35.4478, lon: 139.6425},
-  {name: "新潟市（新潟）", lat: 37.9026, lon: 139.0236},
-  {name: "富山市（富山）", lat: 36.6953, lon: 137.2113},
-  {name: "金沢市（石川）", lat: 36.5947, lon: 136.6256},
-  {name: "福井市（福井）", lat: 36.0652, lon: 136.2219},
-  {name: "甲府市（山梨）", lat: 35.6642, lon: 138.5684},
-  {name: "長野市（長野）", lat: 36.6513, lon: 138.1812},
-  {name: "岐阜市（岐阜）", lat: 35.4233, lon: 136.7607},
-  {name: "静岡市（静岡）", lat: 34.9769, lon: 138.3831},
-  {name: "名古屋市（愛知）", lat: 35.1815, lon: 136.9066},
-  {name: "津市（三重）", lat: 34.7303, lon: 136.5086},
-  {name: "大津市（滋賀）", lat: 35.0045, lon: 135.8686},
-  {name: "京都市（京都）", lat: 35.0116, lon: 135.7681},
-  {name: "大阪市（大阪）", lat: 34.6937, lon: 135.5022},
-  {name: "神戸市（兵庫）", lat: 34.6901, lon: 135.1955},
-  {name: "奈良市（奈良）", lat: 34.6851, lon: 135.8328},
-  {name: "和歌山市（和歌山）", lat: 34.2260, lon: 135.1675},
-  {name: "鳥取市（鳥取）", lat: 35.5036, lon: 134.2383},
-  {name: "松江市（島根）", lat: 35.4723, lon: 133.0505},
-  {name: "岡山市（岡山）", lat: 34.6618, lon: 133.9350},
-  {name: "広島市（広島）", lat: 34.3853, lon: 132.4553},
-  {name: "山口市（山口）", lat: 34.1859, lon: 131.4714},
-  {name: "徳島市（徳島）", lat: 34.0658, lon: 134.5594},
-  {name: "高松市（香川）", lat: 34.3401, lon: 134.0434},
-  {name: "松山市（愛媛）", lat: 33.8392, lon: 132.7656},
-  {name: "高知市（高知）", lat: 33.5597, lon: 133.5311},
-  {name: "福岡市（福岡）", lat: 33.5902, lon: 130.4017},
-  {name: "佐賀市（佐賀）", lat: 33.2494, lon: 130.2989},
-  {name: "長崎市（長崎）", lat: 32.7503, lon: 129.8779},
-  {name: "熊本市（熊本）", lat: 32.7898, lon: 130.7417},
-  {name: "大分市（大分）", lat: 33.2382, lon: 131.6126},
-  {name: "宮崎市（宮崎）", lat: 31.9111, lon: 131.4239},
-  {name: "鹿児島市（鹿児島）", lat: 31.5602, lon: 130.5581},
-  {name: "那覇市（沖縄）", lat: 26.2124, lon: 127.6809}
+  {id: "sapporo", name: "札幌市（北海道）"},
+  {id: "aomori", name: "青森市（青森）"},
+  {id: "morioka", name: "盛岡市（岩手）"},
+  {id: "sendai", name: "仙台市（宮城）"},
+  {id: "akita", name: "秋田市（秋田）"},
+  {id: "yamagata", name: "山形市（山形）"},
+  {id: "fukushima", name: "福島市（福島）"},
+  {id: "mito", name: "水戸市（茨城）"},
+  {id: "utsunomiya", name: "宇都宮市（栃木）"},
+  {id: "maebashi", name: "前橋市（群馬）"},
+  {id: "saitama", name: "さいたま市（埼玉）"},
+  {id: "chiba", name: "千葉市（千葉）"},
+  {id: "tokyo", name: "東京都（東京）"},
+  {id: "yokohama", name: "横浜市（神奈川）"},
+  {id: "niigata", name: "新潟市（新潟）"},
+  {id: "toyama", name: "富山市（富山）"},
+  {id: "kanazawa", name: "金沢市（石川）"},
+  {id: "fukui", name: "福井市（福井）"},
+  {id: "kofu", name: "甲府市（山梨）"},
+  {id: "nagano", name: "長野市（長野）"},
+  {id: "gifu", name: "岐阜市（岐阜）"},
+  {id: "shizuoka", name: "静岡市（静岡）"},
+  {id: "nagoya", name: "名古屋市（愛知）"},
+  {id: "tsu", name: "津市（三重）"},
+  {id: "otsu", name: "大津市（滋賀）"},
+  {id: "kyoto", name: "京都市（京都）"},
+  {id: "osaka", name: "大阪市（大阪）"},
+  {id: "kobe", name: "神戸市（兵庫）"},
+  {id: "nara", name: "奈良市（奈良）"},
+  {id: "wakayama", name: "和歌山市（和歌山）"},
+  {id: "tottori", name: "鳥取市（鳥取）"},
+  {id: "matsue", name: "松江市（島根）"},
+  {id: "okayama", name: "岡山市（岡山）"},
+  {id: "hiroshima", name: "広島市（広島）"},
+  {id: "yamaguchi", name: "山口市（山口）"},
+  {id: "tokushima", name: "徳島市（徳島）"},
+  {id: "takamatsu", name: "高松市（香川）"},
+  {id: "matsuyama", name: "松山市（愛媛）"},
+  {id: "kochi", name: "高知市（高知）"},
+  {id: "fukuoka", name: "福岡市（福岡）"},
+  {id: "saga", name: "佐賀市（佐賀）"},
+  {id: "nagasaki", name: "長崎市（長崎）"},
+  {id: "kumamoto", name: "熊本市（熊本）"},
+  {id: "oita", name: "大分市（大分）"},
+  {id: "miyazaki", name: "宮崎市（宮崎）"},
+  {id: "kagoshima", name: "鹿児島市（鹿児島）"},
+  {id: "naha", name: "那覇市（沖縄）"}
 ];
 
-const TZ = "Asia/Tokyo";
-const VARS = "temperature_2m_max,temperature_2m_min,temperature_2m_mean,weather_code,precipitation_sum";
-
+let globalAllData = null;
 let currentDisplayDays = 30;
-let currentCityIndex = 12; 
-let cachedWeatherData = null;
+let currentCityId = "tokyo";
 
 function initCitySelect(){
   const sel = document.getElementById("citySelect");
   sel.innerHTML = "";
-  CITIES.forEach((c, idx) => {
+  CITIES.forEach((c) => {
     const opt = document.createElement("option");
-    opt.value = idx;
+    opt.value = c.id;
     opt.textContent = c.name;
-    if(idx === currentCityIndex) opt.selected = true;
+    if(c.id === currentCityId) opt.selected = true;
     sel.appendChild(opt);
   });
 }
@@ -256,49 +244,204 @@ function isoAddYears(iso,n){
   return `${y+n}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
 }
 
-function recordsFromDaily(daily){
-  if(!daily || !daily.time) return {};
-  const t=daily.time, out={};
-  t.forEach((d,i)=>out[d]={
-    date:d,
-    t_max:daily.temperature_2m_max?.[i],
-    t_min:daily.temperature_2m_min?.[i],
-    t_mean:daily.temperature_2m_mean?.[i],
-    weather_code:daily.weather_code?.[i],
-    precip:daily.precipitation_sum?.[i]
-  });
-  return out;
-}
-
-// タイムアウト付きフェッチ（10秒で強制中断してエラーにする）
-async function fetchWithTimeout(url, timeout = 10000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
+async function loadData(){
   try {
-    const r = await fetch(url, { signal: controller.signal });
-    clearTimeout(id);
-    if(!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
-    return await r.json();
+    const res = await fetch("data/weather.json?t=" + Date.now());
+    if(!res.ok) throw new Error("JSON読み込み失敗");
+    globalAllData = await res.json();
+    render();
   } catch(e) {
-    clearTimeout(id);
-    throw e;
+    console.error(e);
+    document.getElementById("status").textContent = "データ読み込みエラー";
+    document.getElementById("status").style.background = "#fde8e8";
+    document.getElementById("status").style.color = "#c5482f";
   }
 }
 
-async function loadCityData(city){
-  const statusEl = document.getElementById("status");
-  try {
-    // 1. 最近のデータ取得
-    const recentUrl = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&daily=${VARS}&timezone=${TZ}&past_days=35&forecast_days=1`;
-    const recent = await fetchWithTimeout(recentUrl);
+function onCityChanged(){
+  const sel = document.getElementById("citySelect");
+  currentCityId = sel.value;
+  render();
+}
 
-    // 2. 昨年のデータ取得
-    const today = new Date();
-    const end = new Date(today); end.setDate(end.getDate()-365);
-    const start = new Date(end); start.setDate(start.getDate()-35);
-    const fmt = d => d.toISOString().slice(0,10);
-    const lyUrl = `https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&daily=${VARS}&timezone=${TZ}&start_date=${fmt(start)}&end_date=${fmt(end)}`;
-    const ly = await fetchWithTimeout(lyUrl);
+function changePeriod(days){
+  currentDisplayDays = days;
+  document.querySelectorAll('.period-btn').forEach(btn=>{
+    if(btn.getAttribute('data-days') === String(days)){
+      btn.classList.add('active');
+    }else{
+      btn.classList.remove('active');
+    }
+  });
+  render();
+}
 
-    const merged = {...recordsFromDaily(ly.daily), ...recordsFromDaily(recent.daily)};
-    return {store: merged, live: true
+function buildPairs(store){
+  const all = Object.values(store).filter(r=>r && r.t_max!=null).sort((a,b)=>a.date<b.date?-1:1);
+  if(all.length === 0) return [];
+  
+  const today = new Date();
+  const cur = all.filter(r=>{
+    const y = +r.date.slice(0,4);
+    return y === today.getFullYear() || (today.getMonth() === 0 && y === today.getFullYear());
+  });
+  let curDays = cur.length ? cur : all.slice(-35);
+
+  if(currentDisplayDays !== 'all'){
+    curDays = curDays.slice(-Number(currentDisplayDays));
+  }
+
+  return curDays.map(c=>{
+    const lyKey = isoAddYears(c.date, -1);
+    return {cur: c, ly: store[lyKey] || null};
+  });
+}
+
+function render(){
+  if(!globalAllData) return;
+  const store = globalAllData[currentCityId] || {};
+  const dates = Object.keys(store).sort();
+  document.getElementById("upd").textContent = dates.length ? dates[dates.length-1] : "—";
+
+  const cityObj = CITIES.find(c => c.id === currentCityId);
+  document.getElementById("chartTitle").textContent = `${cityObj ? cityObj.name : ''} の気温の地層 — 日ごとの今年と昨年`;
+
+  const pairs = buildPairs(store);
+  const cards = document.getElementById("cards");
+  const strata = document.getElementById("strata");
+  strata.innerHTML = "";
+
+  if(pairs.length === 0){
+    cards.innerHTML = `<div class="card" style="grid-column: span 4; text-align:center; color:var(--ink-2);">データがありません。GitHub Actionsのデータ更新をお待ちください。</div>`;
+    return;
+  }
+
+  const last = pairs[pairs.length-1];
+  
+  function deltaHTML(now,then,unit="°C"){
+    if(then==null) return `<span class="delta flat">—</span>`;
+    const d = +(now-then).toFixed(1);
+    const cls = d>0.05?"up":d<-0.05?"down":"flat";
+    const sign = d>0?"+":"";
+    return `<span class="delta ${cls}">${sign}${d}${unit}</span>`;
+  }
+
+  const c = last.cur, l = last.ly;
+  const avg = arr => arr.length ? (arr.reduce((s,x)=>s+x,0)/arr.length) : null;
+  const curMeans = pairs.map(p=>p.cur.t_mean).filter(v=>v!=null);
+  const lyMeans = pairs.map(p=>p.ly?.t_mean).filter(v=>v!=null);
+  const rainDays = pairs.filter(p=>[51,53,55,61,63,65,80,81,82,95,96,99].includes(p.cur.weather_code)).length;
+  const lyRainDays = pairs.filter(p=>p.ly&&[51,53,55,61,63,65,80,81,82,95,96,99].includes(p.ly.weather_code)).length;
+  const [emo, desc] = wx(c.weather_code);
+  const periodLabel = currentDisplayDays === 'all' ? '全期間' : `直近${currentDisplayDays}日`;
+
+  cards.innerHTML = `
+    <div class="card">
+      <div class="lbl">最新日 ${c.date.slice(5)}</div>
+      <div class="val">${emo} ${desc}</div>
+      <div class="sub">最高 ${c.t_max}° / 最低 ${c.t_min}°</div>
+    </div>
+    <div class="card">
+      <div class="lbl">最高気温 vs 昨年</div>
+      <div class="val">${c.t_max}° ${deltaHTML(c.t_max, l?.t_max)}</div>
+      <div class="sub">昨年同日 ${l?l.t_max+"°":"—"}</div>
+    </div>
+    <div class="card">
+      <div class="lbl">平均気温（${periodLabel}）</div>
+      <div class="val">${avg(curMeans)?.toFixed(1)}° ${deltaHTML(avg(curMeans), avg(lyMeans))}</div>
+      <div class="sub">昨年 ${avg(lyMeans)?avg(lyMeans).toFixed(1)+"°":"—"}</div>
+    </div>
+    <div class="card">
+      <div class="lbl">雨の日数（${periodLabel}）</div>
+      <div class="val">${rainDays}日 ${deltaHTML(rainDays, lyRainDays, " 日")}</div>
+      <div class="sub">昨年 ${lyRainDays}日</div>
+    </div>`;
+
+  let lo = Infinity, hi = -Infinity;
+  pairs.forEach(p=>{
+    [p.cur.t_min, p.cur.t_max, p.ly?.t_min, p.ly?.t_max].forEach(v=>{
+      if(v!=null){ lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    });
+  });
+  lo = Math.floor(lo-2); hi = Math.ceil(hi+2);
+  const span = hi - lo;
+  const PLOT = 240;
+  const y = t => PLOT * (1 - (t - lo) / span);
+
+  const grid = document.createElement("div");
+  grid.style.cssText = "position:absolute;left:4px;right:4px;top:0;height:240px;pointer-events:none";
+  for(let t = Math.ceil(lo/5)*5; t <= hi; t += 5){
+    const g = document.createElement("div");
+    g.className = "gridline";
+    g.style.top = y(t) + "px";
+    g.innerHTML = `<span>${t}°</span>`;
+    grid.appendChild(g);
+  }
+  strata.appendChild(grid);
+
+  pairs.forEach(p=>{
+    const col = document.createElement("div");
+    col.className = "col";
+    const plot = document.createElement("div");
+    plot.className = "plot";
+
+    if(p.ly){
+      const b = document.createElement("div");
+      b.className = "band ly";
+      b.style.top = y(p.ly.t_max) + "px";
+      b.style.height = Math.max(3, (y(p.ly.t_min) - y(p.ly.t_max))) + "px";
+      plot.appendChild(b);
+    }
+
+    const cb = document.createElement("div");
+    cb.className = "band cur";
+    cb.style.top = y(p.cur.t_max) + "px";
+    cb.style.height = Math.max(3, (y(p.cur.t_min) - y(p.cur.t_max))) + "px";
+    cb.style.setProperty("--_top", tempColor(p.cur.t_max));
+    cb.style.setProperty("--_bot", tempColor(p.cur.t_min));
+    plot.appendChild(cb);
+
+    const e = document.createElement("div");
+    e.className = "wx";
+    e.style.top = (y(p.cur.t_max) - 18) + "px";
+    e.textContent = wx(p.cur.weather_code)[0];
+    plot.appendChild(e);
+
+    col.appendChild(plot);
+
+    const lab = document.createElement("div");
+    lab.className = "dlabel";
+    lab.textContent = p.cur.date.slice(5);
+    col.appendChild(lab);
+
+    col.addEventListener("mousemove", ev => showTip(ev, p));
+    col.addEventListener("mouseleave", hideTip);
+    strata.appendChild(col);
+  });
+}
+
+const tip = document.getElementById("tip");
+function showTip(ev, p){
+  const [e, d] = wx(p.cur.weather_code);
+  const lyTxt = p.ly ? `${wx(p.ly.weather_code)[1]} / ${p.ly.t_max}°–${p.ly.t_min}°` : "データなし";
+  const dmax = p.ly ? (p.cur.t_max - p.ly.t_max).toFixed(1) : null;
+  const dcls = dmax > 0 ? "up" : dmax < 0 ? "down" : "";
+  tip.innerHTML = `<b>${p.cur.date}</b>
+    <div class="row"><span>今年 ${e} ${d}</span><span>${p.cur.t_max}°–${p.cur.t_min}°</span></div>
+    <div class="row ly"><span>昨年</span><span>${lyTxt}</span></div>
+    ${dmax!=null?`<div class="row"><span>最高気温差</span><span class="d ${dcls}">${dmax>0?"+":""}${dmax}°</span></div>`:""}
+    ${p.cur.precip?`<div class="row"><span>降水</span><span>${p.cur.precip}mm</span></div>`:""}`;
+  tip.style.opacity = "1";
+  const x = Math.min(ev.clientX + 14, window.innerWidth - 180);
+  const yy = Math.max(12, ev.clientY - 10);
+  tip.style.left = x + "px";
+  tip.style.top = yy + "px";
+}
+
+function hideTip(){ tip.style.opacity = "0"; }
+
+initCitySelect();
+loadData();
+</script>
+</body>
+</html>
